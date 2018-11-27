@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Đếm số lần xuất hiện của phần tử</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<script>
+
+    function dispArr(arr) {
+        let str = '';
+        for (var i = 0; i < arr.length; ++i) {
+            str += `${arr[i]}\t`;
+            if (i % 10 == 9) {
+                str += "<br>";
+            }
+        }
+        document.write(str);
+    }
+
+    function binSearch(arr, left, right, data) {
+        if (right >= left) {
+            var mid = parseInt(left + (right - left) / 2);
+            if (arr[mid] == data)
+                return mid;
+
+            if (arr[mid] > data)
+                return binSearch(arr, left, mid - 1, data);
+
+            return binSearch(arr, mid + 1, right, data);
+        }
+        return -1;
+    }
+
+    function count(arr, data) {
+        var count = 0;
+        var position = binSearch(arr, 0, arr.length - 1, data);
+        if (position > -1) {
+            ++count;
+            for (var i = position - 1; i > 0; i++) {
+                if (arr[i] == data) {
+                    ++count;
+                } else {
+                    break;
+                }
+            }
+            for (var i = position - 1; i < arr.length; i++) {
+                if (arr[i] === data) {
+                    ++count
+                } else {
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+
+    var nums = [];
+    for (var i = 0; i < 100; i++) {
+        nums[i] = Math.floor(Math.random() * 101);
+    }
+
+    function insertionsort(arr) {
+        var j;
+        for (var i = 1; i < arr.length; i++) {
+            j = i - 1;
+            temp = arr[i];
+            while (j >= 0 && temp < arr[j]) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = temp;
+        }
+    }
+
+    insertionsort(nums);
+    dispArr(nums);
+    document.write("<br/>");
+    var val = parseInt(prompt("Enter a value to count"));
+    var retVal = count(nums, val);
+    document.write("Found " + retVal + " occurrences of " + val + ".");
+
+</script>
+</body>
+</html>
